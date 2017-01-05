@@ -1,4 +1,5 @@
 var request = require('request');
+var gpio = require("pi-gpio"); //https://www.npmjs.com/package/pi-gpio - There is some setup involved here!
 var rc522 = require("rc522/build/Release/rc522");
 var logger = require('./logger.js');
 
@@ -9,6 +10,7 @@ var codeArray = [];
 var relayPin = 16;
 
 var sleepTime = 30000;
+var lockOpenTime = 5000;
 
 setInterval(function() {
     doHeartbeat();
@@ -19,12 +21,22 @@ rc522(function(rfidSerialNumber) { // This is called everytime the reader sees a
     console.log(rfidSerialNumber);
     if (codeArray.indexOf(rfidSerialNumber) > 0) {
         // some code to unlock the door
+        setPin(relayPin, 0); // set the pin to low to trigger the relat
+        setTimeout(setPin(relayPin, 1), lockOpenTime); // lock the door again after the set amount of time
         sendUnlockStatus('ALLOWED');
     } else {
         // some code to signal access denied
         sendUnlockStatus('BLOCKED');
     }
 });
+
+function setPin(pin, stat) {
+    gpio.open(pin, "output", function(err) {		// Open pin for output 
+        gpio.write(pin, stat, function() {			// Set pin high (1) low (0)
+            gpio.close(pin);						// Close pin 
+        });
+    });
+}
 
 function getCodeList() {
     var command = 'GETLIST';
