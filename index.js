@@ -3,8 +3,8 @@ var gpio = require("pi-gpio"); //https://www.npmjs.com/package/pi-gpio - There i
 var rc522 = require("rc522/build/Release/rc522");
 var logger = require('./logger.js');
 
-var accessKey = '098f6bcd4621d373cade4e832627b4f6';
-var lockId = '1';
+var accessKey = '098f6bcd4621d373cade4e832627b4f6'; // Access key given to you by the web app (http://locks.duttonbiz.com/)
+var lockId = '1'; // Lock id to identify the lock for your setup
 var codeArray = [];
 
 var relayPin = 16;
@@ -13,7 +13,7 @@ var sleepTime = 30000;
 var lockOpenTime = 5000;
 
 setInterval(function() {
-    doHeartbeat();
+    //doHeartbeat();
     getCodeList();
 }, sleepTime);
 
