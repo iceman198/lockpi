@@ -1,6 +1,6 @@
 var request = require('request');
 var gpio = require("pi-gpio"); //https://www.npmjs.com/package/pi-gpio - There is some setup involved here!
-var rc522 = require("rc522/build/Release/rc522");
+var rc522 = require("rc522/build/Release/rc522"); //https://www.npmjs.com/package/rc522 - setup involved here too!
 var logger = require('./logger.js');
 
 var accessKey = '098f6bcd4621d373cade4e832627b4f6'; // Access key given to you by the web app (http://locks.duttonbiz.com/)
