@@ -1,0 +1,21 @@
+{
+  "name": "lockpi",
+  "version": "1.0.0",
+  "description": "A lock system controlled by your Raspberry Pi that talks to the cloud to let people in",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "raspberry",
+    "pi",
+    "lock"
+  ],
+  "author": "Sean Dutton",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "request": "^2.79.0"
+  }
+}
