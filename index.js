@@ -6,6 +6,8 @@ var accessKey = '098f6bcd4621d373cade4e832627b4f6';
 var lockId = '1';
 var codeArray = [];
 
+var relayPin = 16;
+
 var sleepTime = 30000;
 
 setInterval(function() {
@@ -16,11 +18,11 @@ setInterval(function() {
 rc522(function(rfidSerialNumber) { // This is called everytime the reader sees a tag
     console.log(rfidSerialNumber);
     if (codeArray.indexOf(rfidSerialNumber) > 0) {
-        sendUnlockStatus('ALLOWED');
         // some code to unlock the door
+        sendUnlockStatus('ALLOWED');
     } else {
-        sendUnlockStatus('BLOCKED');
         // some code to signal access denied
+        sendUnlockStatus('BLOCKED');
     }
 });
 
