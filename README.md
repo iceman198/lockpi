@@ -1,4 +1,4 @@
-Using the Sainsmart RFID-RC522 module  - Some change here
+Using the Sainsmart RFID-RC522 module
     
     Pi Pin1     <--   3.3V  -->    Pin1 RC522
     Pi Pin25    <--   GND   -->    Pin3 RC522
