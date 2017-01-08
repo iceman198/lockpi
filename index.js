@@ -27,7 +27,7 @@ rc522v1.startListening()
   .catch(function(err) { console.log('Error reading tag:', err); });
 */
 
-rc522(function(rfidSerialNumber) { // This is called everytime the reader sees a tag
+rc522v2(function(rfidSerialNumber) { // This is called everytime the reader sees a tag
     console.log('I see a rfid of ' + rfidSerialNumber);
     if (codeArray.indexOf(rfidSerialNumber) > 0) {
         // some code to unlock the door
