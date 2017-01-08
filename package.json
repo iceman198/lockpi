@@ -19,5 +19,9 @@
     "pi-gpio": "0.0.8",
     "rc522-rfid-promise": "^16.0.1",
     "request": "^2.79.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/iceman198/lockpi.git"
   }
 }
