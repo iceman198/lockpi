@@ -20,9 +20,9 @@ setInterval(function() {
 
 rc522.startListening()
   .then(function(tagId){ 
-    console.log(tagId); 
+    console.log('I see a tag of ' + tagId); 
 })
-  .catch(function(err) { console.log(err); });
+  .catch(function(err) { console.log('Error reading tag:', err); });
 
 /*
 rc522(function(rfidSerialNumber) { // This is called everytime the reader sees a tag
