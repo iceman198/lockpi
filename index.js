@@ -1,6 +1,7 @@
 var request = require('request');
 var gpio = require("pi-gpio"); //https://www.npmjs.com/package/pi-gpio - There is some setup involved here!
-var rc522 = require("rc522/build/Release/rc522"); //https://www.npmjs.com/package/rc522 - setup involved here too!
+//var rc522 = require("rc522/build/Release/rc522"); //https://www.npmjs.com/package/rc522 - setup involved here too!
+var rc522 = require("rc522-rfid-promise");
 var logger = require('./logger.js');
 
 var accessKey = '098f6bcd4621d373cade4e832627b4f6'; // Access key given to you by the web app (http://locks.duttonbiz.com/)
@@ -17,6 +18,13 @@ setInterval(function() {
     getCodeList();
 }, sleepTime);
 
+rc522.startListening()
+  .then(function(tagId){ 
+    console.log(tagId); 
+})
+  .catch(function(err) { console.log(err); });
+
+/*
 rc522(function(rfidSerialNumber) { // This is called everytime the reader sees a tag
     console.log(rfidSerialNumber);
     if (codeArray.indexOf(rfidSerialNumber) > 0) {
@@ -29,6 +37,7 @@ rc522(function(rfidSerialNumber) { // This is called everytime the reader sees a
         sendUnlockStatus('BLOCKED');
     }
 });
+*/
 
 function setPin(pin, stat) {
     gpio.open(pin, "output", function(err) {		// Open pin for output 
