@@ -17,6 +17,8 @@ Update your Pi:
     $sudo apt-get Update
     -- anything else you'd like for your dist maybe
 
+Make sure to enable SPI in raspi-config as well.
+
 Install GCC compiler:
     
     $sudo apt-get install build-essential
