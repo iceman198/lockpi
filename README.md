@@ -24,6 +24,14 @@ Update your Pi:
 
 Make sure to enable SPI in raspi-config as well.
 
+Not quite sure this is needed but lets configure the SPI group: (taken from http://www.hacker-maker.com/2015/12/rfid-rc522-on-raspberry-pi-with-nodejs.html)
+
+    $sudo groupadd -f --system spi
+    $sudo adduser pi spi
+    $sudo nano /etc/udev/rules.d/90-spi.rules
+    --- Then add this to the file :
+    SUBSYSTEM=="spidev", GROUP="spi"
+
 Install GCC compiler:
     
     $sudo apt-get install build-essential
@@ -42,6 +50,10 @@ Snag and compile the spi_bcm2835 driver:
     $sudo make check
     $sudo make install
     $sudo modprobe spi_bcm2835
+
+If using this for another nodejs project, you'll want to include the rc522 module as part of the project:
+
+    $npm install --save rc522
 
 Everything previously mentioned is taken from https://www.npmjs.com/package/rc522 and http://geraintw.blogspot.de/2014/01/rfid-and-raspberry-pi.html
 
