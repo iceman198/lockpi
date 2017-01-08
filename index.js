@@ -11,7 +11,7 @@ var lockId = '1'; // Lock id to identify the lock for your setup
 var codeArray = [];
 
 var relayPin = 16;
-rgpio.setup(relayPin, rgpio.DIR_OUT, write);
+rgpio.setup(relayPin, rgpio.DIR_OUT);
 
 var sleepTime = 30000;
 var lockOpenTime = 5000;
