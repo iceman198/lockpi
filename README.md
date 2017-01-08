@@ -57,3 +57,4 @@ If using this for another nodejs project, you'll want to include the rc522 modul
 
 Everything previously mentioned is taken from https://www.npmjs.com/package/rc522 and http://geraintw.blogspot.de/2014/01/rfid-and-raspberry-pi.html
 
+For the lock relay, you'll need pi-gpio: https://www.npmjs.com/package/pi-gpio#installation
