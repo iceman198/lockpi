@@ -17,6 +17,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "pi-gpio": "0.0.8",
+    "rc522-rfid-promise": "^16.0.1",
     "request": "^2.79.0"
   }
 }
