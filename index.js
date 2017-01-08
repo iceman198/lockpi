@@ -1,5 +1,6 @@
 var request = require('request');
 var gpio = require("pi-gpio"); //https://www.npmjs.com/package/pi-gpio - There is some setup involved here!
+var rgpio = require('rpi-gpio');
 //var rc522 = require("rc522/build/Release/rc522"); //https://www.npmjs.com/package/rc522 - setup involved here too!
 //var rc522v1 = require("rc522-rfid-promise");
 var rc522v2 = require("rc522");
@@ -10,6 +11,7 @@ var lockId = '1'; // Lock id to identify the lock for your setup
 var codeArray = [];
 
 var relayPin = 16;
+rgpio.setup(relayPin, rgpio.DIR_OUT, write);
 
 var sleepTime = 30000;
 var lockOpenTime = 5000;
@@ -44,11 +46,20 @@ rc522v2(function(rfidSerialNumber) { // This is called everytime the reader sees
 
 
 function setPin(pin, stat) {
+    /*
     gpio.open(pin, "output", function(err) {		// Open pin for output 
         gpio.write(pin, stat, function() {			// Set pin high (1) low (0)
             gpio.close(pin);						// Close pin 
         });
     });
+    */
+
+    var value = false;
+    if (stat == 1) { value = true; }
+    rgpio.write(pin, value, function(err) {
+        if (err) throw err;
+        logger.log('debug', 'index.js', 'Set pin ' + pin + ' to ' + value);
+    });
 }
 
 function getCodeList() {
