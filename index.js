@@ -88,4 +88,5 @@ function doHeartbeat() {
     });
 }
 
+logger.log('info', 'index.js', 'Ready and waiting...');
 
