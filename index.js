@@ -28,13 +28,14 @@ rc522v1.startListening()
 */
 
 rc522v2(function(rfidSerialNumber) { // This is called everytime the reader sees a tag
-    logger.log('debug', 'index.js', 'I see a rfid of ' + rfidSerialNumber);
     if (codeArray.indexOf(rfidSerialNumber) > 0) {
+        logger.log('debug', 'index.js', 'I recognize rfid of ' + rfidSerialNumber + ' so Im letting them in');
         // some code to unlock the door
         setPin(relayPin, 0); // set the pin to low to trigger the relat
         setTimeout(setPin(relayPin, 1), lockOpenTime); // lock the door again after the set amount of time
         sendUnlockStatus('ALLOWED');
     } else {
+        logger.log('debug', 'index.js', 'UNKNOWN rfid of ' + rfidSerialNumber + ' // blocking access');
         // some code to signal access denied
         sendUnlockStatus('BLOCKED');
     }
