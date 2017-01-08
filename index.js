@@ -14,6 +14,7 @@ var relayPin = 16;
 var sleepTime = 30000;
 var lockOpenTime = 5000;
 
+getCodeList();
 setInterval(function() {
     //doHeartbeat();
     getCodeList();
