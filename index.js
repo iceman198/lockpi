@@ -35,7 +35,10 @@ rc522v2(function(rfidSerialNumber) { // This is called everytime the reader sees
         logger.log('debug', 'index.js', 'RECOGNIZED rfid of ' + rfidSerialNumber + ' so Im letting them in');
         // some code to unlock the door
         setPin(relayPin, 0); // set the pin to low to trigger the relat
-        setTimeout(setPin(relayPin, 1), lockOpenTime); // lock the door again after the set amount of time
+        setTimeout(function() {
+            setPin(relayPin, 1);
+            logger.log('debug', 'index.js', 'Locking the door again')
+        }, lockOpenTime); // lock the door again after the set amount of time
         sendUnlockStatus('ALLOWED');
     } else {
         logger.log('debug', 'index.js', 'UNKNOWN rfid of ' + rfidSerialNumber + ' // blocking access');
