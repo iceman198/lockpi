@@ -28,7 +28,7 @@ rc522v1.startListening()
 */
 
 rc522v2(function(rfidSerialNumber) { // This is called everytime the reader sees a tag
-    if (codeArray.indexOf(rfidSerialNumber) > 0) {
+    if (codeArray.indexOf(rfidSerialNumber) > -1) {
         logger.log('debug', 'index.js', 'RECOGNIZED rfid of ' + rfidSerialNumber + ' so Im letting them in');
         // some code to unlock the door
         setPin(relayPin, 0); // set the pin to low to trigger the relat
