@@ -18,5 +18,9 @@
     "express": "^4.14.0",
     "pi-gpio": "0.0.8",
     "request": "^2.79.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/iceman198/lockpi.git"
   }
 }
