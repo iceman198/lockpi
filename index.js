@@ -1,9 +1,6 @@
 var request = require('request');
-var gpio = require("pi-gpio"); //https://www.npmjs.com/package/pi-gpio - There is some setup involved here!
 var rgpio = require('rpi-gpio');
-//var rc522 = require("rc522/build/Release/rc522"); //https://www.npmjs.com/package/rc522 - setup involved here too!
-//var rc522v1 = require("rc522-rfid-promise");
-var rc522v2 = require("rc522");
+var rc522 = require("rc522");
 var logger = require('./logger.js');
 
 var accessKey = '098f6bcd4621d373cade4e832627b4f6'; // Access key given to you by the web app (http://locks.duttonbiz.com/)
@@ -22,17 +19,9 @@ setInterval(function() {
     getCodeList();
 }, sleepTime);
 
-/*
-rc522v1.startListening()
-  .then(function(tagId){ 
-    console.log('I see a tag of ' + tagId); 
-})
-  .catch(function(err) { console.log('Error reading tag:', err); });
-*/
-
-rc522v2(function(rfidSerialNumber) { // This is called everytime the reader sees a tag
-    if (codeArray.indexOf(rfidSerialNumber) > -1) {
-        logger.log('debug', 'index.js', 'RECOGNIZED rfid of ' + rfidSerialNumber + ' so Im letting them in');
+rc522(function(rfidNum) { // This is called everytime the reader sees a tag
+    if (codeArray.indexOf(rfidNum) > -1) {
+        logger.log('debug', 'index.js', 'RECOGNIZED rfid of ' + rfidNum + ' so Im letting them in');
         // some code to unlock the door
         setPin(relayPin, 0); // set the pin to low to trigger the relat
         setTimeout(function() {
@@ -41,7 +30,7 @@ rc522v2(function(rfidSerialNumber) { // This is called everytime the reader sees
         }, lockOpenTime); // lock the door again after the set amount of time
         sendUnlockStatus('ALLOWED');
     } else {
-        logger.log('debug', 'index.js', 'UNKNOWN rfid of ' + rfidSerialNumber + ' // blocking access');
+        logger.log('debug', 'index.js', 'UNKNOWN rfid of ' + rfidNum + ' // blocking access');
         // some code to signal access denied
         sendUnlockStatus('BLOCKED');
     }
@@ -49,14 +38,6 @@ rc522v2(function(rfidSerialNumber) { // This is called everytime the reader sees
 
 
 function setPin(pin, stat) {
-    /*
-    gpio.open(pin, "output", function(err) {		// Open pin for output 
-        gpio.write(pin, stat, function() {			// Set pin high (1) low (0)
-            gpio.close(pin);						// Close pin 
-        });
-    });
-    */
-
     var value = false;
     if (stat == 1) { value = true; }
     rgpio.write(pin, value, function(err) {
@@ -76,8 +57,6 @@ function getCodeList() {
             logger.log('info', 'index.js', 'Call to ' + option.uri + ' successful: ' + body);
             var json = JSON.parse(body);
             codeArray = json.codeArr;
-
-            // loop through the returned list and replace what we have in memory
         }
     });
 }
