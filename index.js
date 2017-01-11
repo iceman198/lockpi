@@ -59,7 +59,7 @@ setInterval(function () {
             button4value = value;
             buttonChangeCall(4, value);
         }
-        logger.log('debug', 'index.js', 'The value of button4 is ' + value);
+        //logger.log('debug', 'index.js', 'The value of button4 is ' + value);
     });
 }, buttonIntTime);
 
