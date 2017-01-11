@@ -16,13 +16,13 @@ var buttonIntTime = 200;
 var button1pin = 7;
 var button1value = true;
 rgpio.setup(button1pin, rgpio.DIR_IN);
-var button2pin = 11;
+var button2pin = 36;
 var button2value = true;
 rgpio.setup(button2pin, rgpio.DIR_IN);
-var button3pin = 13;
+var button3pin = 38;
 var button3value = true;
 rgpio.setup(button3pin, rgpio.DIR_IN);
-var button4pin = 15;
+var button4pin = 40;
 var button4value = true;
 rgpio.setup(button4pin, rgpio.DIR_IN);
 
