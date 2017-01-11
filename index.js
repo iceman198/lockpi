@@ -1,5 +1,5 @@
 var request = require('request');
-var rgpio = require('rpi-gpio');
+var  rgpio  =  require('rpi-gpio');
 var rc522 = require("rc522");
 var logger = require('./logger.js');
 
@@ -10,7 +10,7 @@ var sleepTime = 30000;
 var lockOpenTime = 5000;
 
 var relayPin = 16;
-rgpio.setup(relayPin, rgpio.DIR_OUT);
+rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
 var buttonIntTime = 1000;
 var button1pin = 7;
@@ -28,44 +28,48 @@ rgpio.setup(button4pin, rgpio.DIR_IN);
 
 var buttonCombo = '';
 
-setInterval(function() {
-    rgpio.read(button1pin, function(err, value) {
-            if (value !== button1value) {
-                button1value = value;
-                buttonChangeCall(1, value);
-            }
-            //logger.log('debug', 'index.js', 'The value of button1 is ' + value);
-        });
-    rgpio.read(button2pin, function(err, value) {
-            if (value !== button2value) {
-                button2value = value;
-                buttonChangeCall(2, value);
-            }
-            //logger.log('debug', 'index.js', 'The value of button2 is ' + value);
-        });
-    rgpio.read(button3pin, function(err, value) {
-            if (value !== button3value) {
-                button3value = value;
-                buttonChangeCall(3, value);
-            }
-            //logger.log('debug', 'index.js', 'The value of button3 is ' + value);
-        });
-    rgpio.read(button4pin, function(err, value) {
-            if (value !== button4value) {
-                button4value = value;
-                buttonChangeCall(4, value);
-            }
-            logger.log('debug', 'index.js', 'The value of button4 is ' + value);
-        });
+setInterval(function () {
+    rgpio.read(button1pin, function (err, value) {
+        if (err) throw err;
+        if (value !== button1value) {
+            button1value = value;
+            buttonChangeCall(1, value);
+        }
+        //logger.log('debug', 'index.js', 'The value of button1 is ' + value);
+    });
+    rgpio.read(button2pin, function (err, value) {
+        if (err) throw err;
+        if (value !== button2value) {
+            button2value = value;
+            buttonChangeCall(2, value);
+        }
+        //logger.log('debug', 'index.js', 'The value of button2 is ' + value);
+    });
+    rgpio.read(button3pin, function (err, value) {
+        if (err) throw err;
+        if (value !== button3value) {
+            button3value = value;
+            buttonChangeCall(3, value);
+        }
+        //logger.log('debug', 'index.js', 'The value of button3 is ' + value);
+    });
+    rgpio.read(button4pin, function (err, value) {
+        if (err) throw err;
+        if (value !== button4value) {
+            button4value = value;
+            buttonChangeCall(4, value);
+        }
+        logger.log('debug', 'index.js', 'The value of button4 is ' + value);
+    });
 }, buttonIntTime);
 
 //getCodeList();
-setInterval(function() {
+setInterval(function () {
     //doHeartbeat();
     //getCodeList();
 }, sleepTime);
 
-rc522(function(rfidNum) { // This is called everytime the reader sees a tag
+rc522(function (rfidNum) { // This is called everytime the reader sees a tag
     checkCode(rfidNum);
 });
 
@@ -87,7 +91,7 @@ function checkCode(code) {
         logger.log('debug', 'index.js', 'RECOGNIZED code of ' + code + ' so Im letting them in');
         // some code to unlock the door
         setPin(relayPin, 0); // set the pin to low to trigger the relat
-        setTimeout(function() {
+        setTimeout(function () {
             setPin(relayPin, 1);
             logger.log('debug', 'index.js', 'Locking the door again')
         }, lockOpenTime); // lock the door again after the set amount of time
@@ -102,10 +106,10 @@ function checkCode(code) {
 function setPin(pin, stat) {
     var value = false;
     if (stat == 1) { value = true; }
-    rgpio.write(pin, value, function(err) {
-        if (err) throw err;
+        rgpio.write(pin,  value,  function (err)  {
+                if  (err)  throw  err;
         logger.log('debug', 'index.js', 'Set pin ' + pin + ' to ' + value);
-    });
+        });
 }
 
 function getCodeList() {
@@ -113,9 +117,9 @@ function getCodeList() {
     var url = 'http://locks.duttonbiz.com/service.php?cmd=' + command + '&key=' + accessKey + '&lockid=' + lockId;
 
     option = { method: 'GET', uri: url }
-    request( option , function(err, res, body) {
-        if( err != null ) { logger.log('error', 'index.js', 'ERROR making call to: ' + option.uri + ' || ' + err.code); }
-        if(body != null) { 
+    request(option, function (err, res, body) {
+        if (err != null) { logger.log('error', 'index.js', 'ERROR making call to: ' + option.uri + ' || ' + err.code); }
+        if (body != null) {
             logger.log('info', 'index.js', 'Call to ' + option.uri + ' successful: ' + body);
             var json = JSON.parse(body);
             codeArray = json.codeArr;
@@ -128,9 +132,9 @@ function sendUnlockStatus(status) {
     var code = '';
     var url = 'http://locks.duttonbiz.com/service.php?cmd=' + command + '&key=' + accessKey + '&lockid=' + lockId + '&code=' + code + '&status=' + status;
     option = { method: 'GET', uri: url }
-    request( option , function(err, res, body) {
-        if( err != null ) { logger.log('error', 'index.js', 'ERROR making call to: ' + option.uri + ' || ' + err.code); }
-        if(body != null) { logger.log('info', 'index.js', 'Call to ' + option.uri + ' successful: ' + body); }
+    request(option, function (err, res, body) {
+        if (err != null) { logger.log('error', 'index.js', 'ERROR making call to: ' + option.uri + ' || ' + err.code); }
+        if (body != null) { logger.log('info', 'index.js', 'Call to ' + option.uri + ' successful: ' + body); }
     });
 }
 
@@ -138,9 +142,9 @@ function doHeartbeat() {
     var command = 'HEARTBEAT';
     var url = 'http://locks.duttonbiz.com/service.php?cmd=' + command + '&key=' + accessKey + '&lockid=' + lockId;
     option = { method: 'GET', uri: url }
-    request( option , function(err, res, body) {
-        if( err != null ) { logger.log('error', 'index.js', 'ERROR making call to: ' + option.uri + ' || ' + err.code); }
-        if(body != null) { logger.log('info', 'index.js', 'Call to ' + option.uri + ' successful: ' + body); }
+    request(option, function (err, res, body) {
+        if (err != null) { logger.log('error', 'index.js', 'ERROR making call to: ' + option.uri + ' || ' + err.code); }
+        if (body != null) { logger.log('info', 'index.js', 'Call to ' + option.uri + ' successful: ' + body); }
     });
 }
 
