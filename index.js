@@ -21,19 +21,20 @@ var button2value = true;
 rgpio.setup(button2pin, rgpio.DIR_IN);
 var button3pin = 31;
 var button3value = true;
-//rgpio.setup(button3pin, rgpio.DIR_IN);
-var button4pin = 36;
+rgpio.setup(button3pin, rgpio.DIR_IN);
+var button4pin = 8;
 var button4value = true;
-//rgpio.setup(button4pin, rgpio.DIR_IN);
+rgpio.setup(button4pin, rgpio.DIR_IN);
 
 var buttonCombo = '';
 
+/*
 rgpio.on('change', function(channel, value) {
     console.log('Channel ' + channel + ' value is now ' + value);
 });
 rgpio.setup(button3pin, rgpio.DIR_IN, rgpio.EDGE_BOTH);
+*/
 
-/*
 setInterval(function () {
     rgpio.read(button1pin, function (err, value) {
         if (err) throw err;
@@ -68,7 +69,6 @@ setInterval(function () {
         //logger.log('debug', 'index.js', 'The value of button4 is ' + value);
     });
 }, buttonIntTime);
-*/
 
 //getCodeList();
 setInterval(function () {
