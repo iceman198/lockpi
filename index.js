@@ -12,7 +12,7 @@ var lockOpenTime = 5000;
 var relayPin = 16;
 rgpio.setup(relayPin, rgpio.DIR_OUT);
 
-var buttonIntTime = 200;
+var buttonIntTime = 1000;
 var button1pin = 7;
 var button1value = true;
 rgpio.setup(button1pin, rgpio.DIR_IN);
@@ -41,25 +41,28 @@ setInterval(function() {
                 button2value = value;
                 buttonChangeCall(2, value);
             }
+            //logger.log('debug', 'index.js', 'The value of button2 is ' + value);
         });
     rgpio.read(button3pin, function(err, value) {
             if (value !== button3value) {
                 button3value = value;
                 buttonChangeCall(3, value);
             }
+            //logger.log('debug', 'index.js', 'The value of button3 is ' + value);
         });
     rgpio.read(button4pin, function(err, value) {
             if (value !== button4value) {
                 button4value = value;
                 buttonChangeCall(4, value);
             }
+            logger.log('debug', 'index.js', 'The value of button4 is ' + value);
         });
 }, buttonIntTime);
 
-getCodeList();
+//getCodeList();
 setInterval(function() {
     //doHeartbeat();
-    getCodeList();
+    //getCodeList();
 }, sleepTime);
 
 rc522(function(rfidNum) { // This is called everytime the reader sees a tag
