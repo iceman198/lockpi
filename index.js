@@ -21,7 +21,7 @@ var button2value = true;
 rgpio.setup(button2pin, rgpio.DIR_IN);
 var button3pin = 31;
 var button3value = true;
-rgpio.setup(button3pin, rgpio.DIR_IN);
+//rgpio.setup(button3pin, rgpio.DIR_IN);
 var button4pin = 36;
 var button4value = true;
 //rgpio.setup(button4pin, rgpio.DIR_IN);
