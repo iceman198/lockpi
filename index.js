@@ -12,7 +12,7 @@ var lockOpenTime = 5000;
 var relayPin = 16;
 rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
-var buttonIntTime = 1000;
+var buttonIntTime = 200;
 var button1pin = 7;
 var button1value = true;
 rgpio.setup(button1pin, rgpio.DIR_IN);
