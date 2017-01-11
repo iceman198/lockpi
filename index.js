@@ -10,6 +10,15 @@ var codeArray = [];
 var relayPin = 16;
 rgpio.setup(relayPin, rgpio.DIR_OUT);
 
+var button1pin = 7;
+rgpio.setup(button1pin, rgpio.DIR_IN);
+
+setInterval(function() {
+    gpio.read(button1pin, function(err, value) {
+            console.log('The value of button1 is ' + value);
+        });
+}, 500);
+
 var sleepTime = 30000;
 var lockOpenTime = 5000;
 
