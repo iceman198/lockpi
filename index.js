@@ -31,7 +31,7 @@ var buttonCombo = '';
 rgpio.on('change', function(channel, value) {
     console.log('Channel ' + channel + ' value is now ' + value);
 });
-rgpio.setup(button4pin, rgpio.DIR_IN, rgpio.EDGE_BOTH);
+rgpio.setup(button3pin, rgpio.DIR_IN, rgpio.EDGE_BOTH);
 
 /*
 setInterval(function () {
