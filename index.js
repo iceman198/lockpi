@@ -14,7 +14,7 @@ var button1pin = 7;
 rgpio.setup(button1pin, rgpio.DIR_IN);
 
 setInterval(function() {
-    gpio.read(button1pin, function(err, value) {
+    rgpio.read(button1pin, function(err, value) {
             console.log('The value of button1 is ' + value);
         });
 }, 500);
