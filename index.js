@@ -88,7 +88,7 @@ rc522(function (rfidNum) { // This is called everytime the reader sees a tag
 
 logger.log('info', 'index.js', 'Ready and waiting...');
 startButtonWatch();
-setTimeout(function() {
+setTimeout(function() { // have to delay this for some reason...something with fighting for the gpio on startup?
     unlockDoor();
 }, 1000);
 
