@@ -84,7 +84,8 @@ rc522(function (rfidNum) { // This is called everytime the reader sees a tag
 });
 
 function startButtonTimeout() {
-    if (buttonTimoutRunning) {
+    if (buttonTimoutRunning == false) {
+        buttonTimoutRunning = true;
         setTimeout(function() {
             if (buttonTimeoutRunning) {
                 logger.log('debug', 'index.js', 'Resetting buttonCombo');
