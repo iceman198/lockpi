@@ -82,9 +82,9 @@ setInterval(function () {
     getCodeList();
 }, sleepTime);
 
-//rc522(function (rfidNum) { // This is called everytime the reader sees a tag
-    //checkCode(rfidNum);
-//});
+rc522(function (rfidNum) { // This is called everytime the reader sees a tag
+    checkCode(rfidNum);
+});
 
 logger.log('info', 'index.js', 'Ready and waiting...');
 startButtonWatch();
