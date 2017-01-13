@@ -76,6 +76,9 @@ function startButtonWatch() {
     }, buttonIntTime);
 }
 
+logger.log('info', 'index.js', 'Ready and waiting...');
+startButtonWatch();
+unlockDoor();
 getCodeList();
 setInterval(function () {
     //doHeartbeat();
@@ -85,9 +88,6 @@ setInterval(function () {
 rc522(function (rfidNum) { // This is called everytime the reader sees a tag
     checkCode(rfidNum);
 });
-
-logger.log('info', 'index.js', 'Ready and waiting...');
-startButtonWatch();
 
 
 function startButtonTimeout() {
@@ -121,18 +121,21 @@ function buttonChangeCall(button, value) {
 function checkCode(code) {
     if (codeArray.indexOf(code) > -1) {
         logger.log('debug', 'index.js', 'RECOGNIZED code of ' + code + ' so Im letting them in');
-        // some code to unlock the door
-        setPin(relayPin, 0); // set the pin to low to trigger the relat
-        setTimeout(function () {
-            setPin(relayPin, 1);
-            logger.log('debug', 'index.js', 'Locking the door again')
-        }, lockOpenTime); // lock the door again after the set amount of time
+        unlockDoor();
         sendUnlockStatus('ALLOWED');
     } else {
         logger.log('debug', 'index.js', 'UNKNOWN code of ' + code + ' // blocking access');
         // some code to signal access denied
         sendUnlockStatus('BLOCKED');
     }
+}
+
+function unlockDoor() {
+    setPin(relayPin, 0); // set the pin to low to trigger the relat
+    setTimeout(function () {
+        setPin(relayPin, 1);
+        logger.log('debug', 'index.js', 'Locking the door again')
+    }, lockOpenTime); // lock the door again after the set amount of time
 }
 
 function setPin(pin, stat) {
