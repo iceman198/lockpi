@@ -1,5 +1,5 @@
 var request = require('request');
-//var rc522 = require("rc522");
+var rc522 = require("rc522");
 var logger = require('./logger.js');
 
 var accessKey = '098f6bcd4621d373cade4e832627b4f6'; // Access key given to you by the web app (http://locks.duttonbiz.com/)
@@ -8,7 +8,7 @@ var codeArray = [];
 var sleepTime = 30000;
 var lockOpenTime = 5000;
 
-var rgpio  =  require('rpi-gpio');
+var rgpio = require('rpi-gpio');
 var relayPin = 16;
 rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
