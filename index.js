@@ -1,5 +1,6 @@
 var request = require('request');
 var rgpio = require('rpi-gpio');
+var rc522 = require("rc522");
 var logger = require('./logger.js');
 
 var accessKey = '098f6bcd4621d373cade4e832627b4f6'; // Access key given to you by the web app (http://locks.duttonbiz.com/)
@@ -11,6 +12,7 @@ var lockOpenTime = 5000;
 var relayPin = 16;
 rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
+var buttonWatchInterval;
 var buttonTimeoutRunning = false;
 var buttonTimeout = 5000;
 var buttonIntTime = 200;
@@ -37,40 +39,42 @@ rgpio.on('change', function(channel, value) {
 rgpio.setup(button3pin, rgpio.DIR_IN, rgpio.EDGE_BOTH);
 */
 
-setInterval(function () {
-    rgpio.read(button1pin, function (err, value) {
-        if (err) throw err;
-        if (value !== button1value) {
-            button1value = value;
-            buttonChangeCall(1, value);
-        }
-        //logger.log('debug', 'index.js', 'The value of button1 is ' + value);
-    });
-    rgpio.read(button2pin, function (err, value) {
-        if (err) throw err;
-        if (value !== button2value) {
-            button2value = value;
-            buttonChangeCall(2, value);
-        }
-        //logger.log('debug', 'index.js', 'The value of button2 is ' + value);
-    });
-    rgpio.read(button3pin, function (err, value) {
-        if (err) throw err;
-        if (value !== button3value) {
-            button3value = value;
-            buttonChangeCall(3, value);
-        }
-        //logger.log('debug', 'index.js', 'The value of button3 is ' + value);
-    });
-    rgpio.read(button4pin, function (err, value) {
-        if (err) throw err;
-        if (value !== button4value) {
-            button4value = value;
-            buttonChangeCall(4, value);
-        }
-        //logger.log('debug', 'index.js', 'The value of button4 is ' + value);
-    });
-}, buttonIntTime);
+function startButtonWatch() {
+    buttonWatchInterval = setInterval(function () {
+        rgpio.read(button1pin, function (err, value) {
+            if (err) throw err;
+            if (value !== button1value) {
+                button1value = value;
+                buttonChangeCall(1, value);
+            }
+            //logger.log('debug', 'index.js', 'The value of button1 is ' + value);
+        });
+        rgpio.read(button2pin, function (err, value) {
+            if (err) throw err;
+            if (value !== button2value) {
+                button2value = value;
+                buttonChangeCall(2, value);
+            }
+            //logger.log('debug', 'index.js', 'The value of button2 is ' + value);
+        });
+        rgpio.read(button3pin, function (err, value) {
+            if (err) throw err;
+            if (value !== button3value) {
+                button3value = value;
+                buttonChangeCall(3, value);
+            }
+            //logger.log('debug', 'index.js', 'The value of button3 is ' + value);
+        });
+        rgpio.read(button4pin, function (err, value) {
+            if (err) throw err;
+            if (value !== button4value) {
+                button4value = value;
+                buttonChangeCall(4, value);
+            }
+            //logger.log('debug', 'index.js', 'The value of button4 is ' + value);
+        });
+    }, buttonIntTime);
+}
 
 getCodeList();
 setInterval(function () {
@@ -78,10 +82,12 @@ setInterval(function () {
     getCodeList();
 }, sleepTime);
 
-var rc522 = require("rc522");
 //rc522(function (rfidNum) { // This is called everytime the reader sees a tag
     //checkCode(rfidNum);
 //});
+
+logger.log('info', 'index.js', 'Ready and waiting...');
+
 
 function startButtonTimeout() {
     if (buttonTimeoutRunning == false) {
@@ -172,6 +178,4 @@ function doHeartbeat() {
         if (body != null) { logger.log('info', 'index.js', 'Call to ' + option.uri + ' successful: ' + body); }
     });
 }
-
-logger.log('info', 'index.js', 'Ready and waiting...');
 
