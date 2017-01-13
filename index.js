@@ -14,7 +14,7 @@ rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
 var buttonWatchInterval;
 var buttonTimeoutRunning = false;
-var buttonTimeout = 5000;
+var buttonTimeout = 10000;
 var buttonIntTime = 200;
 
 var button1pin = 7;
