@@ -87,6 +87,7 @@ setInterval(function () {
 //});
 
 logger.log('info', 'index.js', 'Ready and waiting...');
+startButtonWatch();
 
 
 function startButtonTimeout() {
