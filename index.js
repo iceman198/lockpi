@@ -1,6 +1,5 @@
 var request = require('request');
 var rgpio = require('rpi-gpio');
-var rc522 = require("rc522");
 var logger = require('./logger.js');
 
 var accessKey = '098f6bcd4621d373cade4e832627b4f6'; // Access key given to you by the web app (http://locks.duttonbiz.com/)
@@ -79,6 +78,7 @@ setInterval(function () {
     getCodeList();
 }, sleepTime);
 
+var rc522 = require("rc522");
 //rc522(function (rfidNum) { // This is called everytime the reader sees a tag
     //checkCode(rfidNum);
 //});
