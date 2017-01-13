@@ -12,7 +12,7 @@ var lockOpenTime = 5000;
 var relayPin = 16;
 rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
-var buttonTimoutRunning = false;
+var buttonTimeoutRunning = false;
 var buttonTimeout = 5000;
 var buttonIntTime = 200;
 
@@ -84,13 +84,13 @@ rc522(function (rfidNum) { // This is called everytime the reader sees a tag
 });
 
 function startButtonTimeout() {
-    if (buttonTimoutRunning == false) {
-        buttonTimoutRunning = true;
+    if (buttonTimeoutRunning == false) {
+        buttonTimeoutRunning = true;
         setTimeout(function() {
             if (buttonTimeoutRunning) {
                 logger.log('debug', 'index.js', 'Resetting buttonCombo');
                 buttonCombo = '';
-                buttonTimoutRunning = false;
+                buttonTimeoutRunning = false;
             }
         }, buttonTimeout);
     }
@@ -106,7 +106,7 @@ function buttonChangeCall(button, value) {
         logger.log('debug', 'index.js', 'Button combo has reached 4 characters...resetting');
         checkCode(buttonCombo);
         buttonCombo = '';
-        buttonTimoutRunning = false;
+        buttonTimeoutRunning = false;
     }
 
 }
