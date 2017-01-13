@@ -1,5 +1,5 @@
 var request = require('request');
-var  rgpio  =  require('rpi-gpio');
+var rgpio  =  require('rpi-gpio');
 var rc522 = require("rc522");
 var logger = require('./logger.js');
 
@@ -12,7 +12,10 @@ var lockOpenTime = 5000;
 var relayPin = 16;
 rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
+var buttonTimoutRunning = false;
+var buttonTimeout = 5000;
 var buttonIntTime = 200;
+
 var button1pin = 7;
 var button1value = true;
 rgpio.setup(button1pin, rgpio.DIR_IN);
@@ -80,15 +83,29 @@ rc522(function (rfidNum) { // This is called everytime the reader sees a tag
     checkCode(rfidNum);
 });
 
+function startButtonTimeout() {
+    if (buttonTimoutRunning) {
+        setTimeout(function() {
+            if (buttonTimeoutRunning) {
+                logger.log('debug', 'index.js', 'Resetting buttonCombo');
+                buttonCombo = '';
+                buttonTimoutRunning = false;
+            }
+        }, buttonTimeout);
+    }
+}
+
 function buttonChangeCall(button, value) {
     if (value == false) {
         buttonCombo = buttonCombo + '' + button;
         logger.log('debug', 'index.js', 'Button combo set to ' + buttonCombo);
+        startButtonTimeout();
     }
     if (buttonCombo.length > 3) {
         logger.log('debug', 'index.js', 'Button combo has reached 4 characters...resetting');
         checkCode(buttonCombo);
         buttonCombo = '';
+        buttonTimoutRunning = false;
     }
 
 }
