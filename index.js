@@ -70,10 +70,10 @@ setInterval(function () {
     });
 }, buttonIntTime);
 
-//getCodeList();
+getCodeList();
 setInterval(function () {
     //doHeartbeat();
-    //getCodeList();
+    getCodeList();
 }, sleepTime);
 
 rc522(function (rfidNum) { // This is called everytime the reader sees a tag
