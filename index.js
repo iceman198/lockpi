@@ -1,4 +1,5 @@
 var request = require('request');
+var rgpio = require('rpi-gpio');
 var rc522 = require("rc522");
 var logger = require('./logger.js');
 
@@ -8,7 +9,6 @@ var codeArray = [];
 var sleepTime = 30000;
 var lockOpenTime = 5000;
 
-var rgpio = require('rpi-gpio');
 var relayPin = 16;
 rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
