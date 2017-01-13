@@ -88,7 +88,10 @@ rc522(function (rfidNum) { // This is called everytime the reader sees a tag
 
 logger.log('info', 'index.js', 'Ready and waiting...');
 startButtonWatch();
-unlockDoor();
+setTimeout(function() {
+    unlockDoor();
+}, 1000);
+
 
 function startButtonTimeout() {
     if (buttonTimeoutRunning == false) {
