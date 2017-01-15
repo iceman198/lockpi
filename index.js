@@ -102,8 +102,8 @@ function buzz(time) {
             setPin(buzzerPin, 1);
             setTimeout(function() {
                 setPin(buzzerPin, 0);
-            },50);
-        }, 100);
+            },5);
+        }, 20);
     }
     /*
     setPin(buzzerPin, 1);
