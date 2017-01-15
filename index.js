@@ -12,7 +12,7 @@ var lockOpenTime = 5000;
 var relayPin = 16;
 rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
-var buzzerPin = 40;
+var buzzerPin = 7;
 rgpio.setup(buzzerPin, rgpio.DIR_OUT);
 
 var buttonWatchInterval;
@@ -20,9 +20,9 @@ var buttonTimeoutRunning = false;
 var buttonTimeout = 10000;
 var buttonIntTime = 200;
 
-var button1pin = 7;
-var button1value = true;
-rgpio.setup(button1pin, rgpio.DIR_IN);
+//var button1pin = 7;
+//var button1value = true;
+//rgpio.setup(button1pin, rgpio.DIR_IN);
 var button2pin = 29;
 var button2value = true;
 rgpio.setup(button2pin, rgpio.DIR_IN);
@@ -44,14 +44,14 @@ rgpio.setup(button3pin, rgpio.DIR_IN, rgpio.EDGE_BOTH);
 
 function startButtonWatch() {
     buttonWatchInterval = setInterval(function () {
-        rgpio.read(button1pin, function (err, value) {
+        /*rgpio.read(button1pin, function (err, value) {
             if (err) throw err;
             if (value !== button1value) {
                 button1value = value;
                 buttonChangeCall(1, value);
             }
             //logger.log('debug', 'index.js', 'The value of button1 is ' + value);
-        });
+        });*/
         rgpio.read(button2pin, function (err, value) {
             if (err) throw err;
             if (value !== button2value) {
