@@ -104,6 +104,7 @@ function buzz(time) {
         setTimeout(function() {
             setPin(buzzerPin, 0);
         }, i*20);
+        i++;
     }
     /*
     setPin(buzzerPin, 1);
