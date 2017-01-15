@@ -12,6 +12,9 @@ var lockOpenTime = 5000;
 var relayPin = 16;
 rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
+var buzzerPin = 40;
+rgpio.setup(buzzerPin, rgpio.DIR_OUT);
+
 var buttonWatchInterval;
 var buttonTimeoutRunning = false;
 var buttonTimeout = 10000;
@@ -90,8 +93,16 @@ logger.log('info', 'index.js', 'Ready and waiting...');
 startButtonWatch();
 setTimeout(function() {
     unlockDoor();
+    buzz(1000);
 }, 1000);
 
+function buzz(time) {
+    setPin(buzzerPin, 1);
+    setTimeout(function () {
+        setPin(buzzerPin, 0);
+        logger.log('debug', 'index.js', 'Buzzing for ' + time + ' miliseconds');
+    }, time); // lock the door again after the set amount of time
+}
 
 function startButtonTimeout() {
     if (buttonTimeoutRunning == false) {
@@ -134,10 +145,10 @@ function checkCode(code) {
 }
 
 function unlockDoor() {
-    setPin(relayPin, 0); // set the pin to low to trigger the relat
+    setPin(relayPin, 0); // set the pin to low to trigger the relay
     setTimeout(function () {
         setPin(relayPin, 1);
-        logger.log('debug', 'index.js', 'Locking the door again')
+        logger.log('debug', 'index.js', 'Locking the door again');
     }, lockOpenTime); // lock the door again after the set amount of time
 }
 
