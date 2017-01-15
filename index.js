@@ -98,10 +98,12 @@ setTimeout(function() {
 
 function buzz(time) {
     for (i = 0; i < 100; i++) {
-        setPin(buzzerPin, 1);
-        sleep(10);
-        setPin(buzzerPin, 0);
-        sleep(10);
+        setTimeout(function() {
+            setPin(buzzerPin, 1);
+            setTimeout(function() {
+                setPin(buzzerPin, 0);
+            },50);
+        }, 100);
     }
     /*
     setPin(buzzerPin, 1);
