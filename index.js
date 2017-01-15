@@ -104,7 +104,7 @@ function buzz(time) {
             setPin(buzzerPin, 1);
             setTimeout(function() {
                 setPin(buzzerPin, 0);
-            },i*r);
+            }, i*r);
         }, i*n);
     }
     /*
