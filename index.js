@@ -145,7 +145,7 @@ function checkCode(code) {
 }
 
 function unlockDoor() {
-    buzz(2000);
+    buzz(lockOpenTime);
     setPin(relayPin, 0); // set the pin to low to trigger the relay
     setTimeout(function () {
         setPin(relayPin, 1);
