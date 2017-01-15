@@ -93,7 +93,7 @@ logger.log('info', 'index.js', 'Ready and waiting...');
 startButtonWatch();
 setTimeout(function() {
     unlockDoor();
-    buzz(1000);
+    //buzz(1000);
 }, 1000);
 
 function buzz(time) {
@@ -145,6 +145,7 @@ function checkCode(code) {
 }
 
 function unlockDoor() {
+    buzz(1000);
     setPin(relayPin, 0); // set the pin to low to trigger the relay
     setTimeout(function () {
         setPin(relayPin, 1);
