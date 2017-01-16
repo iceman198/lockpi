@@ -97,7 +97,7 @@ setTimeout(function() {
 }, 1000);
 
 function buzz(time) {
-    for (i = 0; i < 50; i++) {
+    for (i = 0; i < 100; i++) {
         var n = i*10;
         var r = n+5;
         logger.log('debug', 'index.js', 'N is ' + n + ' R is ' + r);
