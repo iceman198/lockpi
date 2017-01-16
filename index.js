@@ -103,10 +103,10 @@ function buzz(time) {
         logger.log('debug', 'index.js', 'N is ' + n + ' R is ' + r);
         setTimeout(function() {
             setPin(buzzerPin, 1);
-            setTimeout(function() {
-                setPin(buzzerPin, 0);
-            }, r);
         }, n);
+        setTimeout(function() {
+            setPin(buzzerPin, 0);
+        }, r);
     }
     /*
     setPin(buzzerPin, 1);
