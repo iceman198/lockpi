@@ -98,8 +98,8 @@ setTimeout(function() {
 
 function buzz(time) {
     for (i = 0; i < 1000; i++) {
-        var n = i*6;
-        var r = n+3;
+        var n = i*2;
+        var r = n+1;
         //logger.log('debug', 'index.js', 'N is ' + n + ' R is ' + r);
         setTimeout(function() {
             setPin(buzzerPin, 1);
