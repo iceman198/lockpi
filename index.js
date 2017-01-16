@@ -100,7 +100,7 @@ function buzz(time) {
     for (i = 0; i < 1000; i++) {
         var n = i*4;
         var r = n+2;
-        logger.log('debug', 'index.js', 'N is ' + n + ' R is ' + r);
+        //logger.log('debug', 'index.js', 'N is ' + n + ' R is ' + r);
         setTimeout(function() {
             setPin(buzzerPin, 1);
         }, n);
@@ -171,7 +171,7 @@ function setPin(pin, stat) {
     if (stat == 1) { value = true; }
         rgpio.write(pin,  value,  function (err)  {
                 if  (err)  throw  err;
-        logger.log('debug', 'index.js', 'Set pin ' + pin + ' to ' + value);
+        //logger.log('debug', 'index.js', 'Set pin ' + pin + ' to ' + value);
         });
 }
 
