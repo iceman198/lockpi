@@ -14,7 +14,7 @@ rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
 var buttonWatchInterval;
 var buttonTimeoutRunning = false;
-var buttonTimeout = 10000;
+var buttonTimeout = 16000;
 var buttonIntTime = 200;
 
 var button1pin = 7;
@@ -135,6 +135,7 @@ function startButtonTimeout() {
                 logger.log('debug', 'index.js', 'Resetting buttonCombo');
                 buttonCombo = '';
                 buttonTimeoutRunning = false;
+                buzz('UNLOCK_FAIL');
             }
         }, buttonTimeout);
     }
@@ -142,7 +143,6 @@ function startButtonTimeout() {
 
 function buttonChangeCall(button, value) {
     if (value == false) {
-        buzz('BUTTON_PRESS');
         buttonCombo = buttonCombo + '' + button;
         logger.log('debug', 'index.js', 'Button combo set to ' + buttonCombo);
         startButtonTimeout();
@@ -152,8 +152,9 @@ function buttonChangeCall(button, value) {
         checkCode(buttonCombo);
         buttonCombo = '';
         buttonTimeoutRunning = false;
+    } else {
+        buzz('BUTTON_PRESS');
     }
-
 }
 
 function checkCode(code) {
