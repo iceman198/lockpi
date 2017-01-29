@@ -152,7 +152,8 @@ function buttonChangeCall(button, value) {
         checkCode(buttonCombo);
         buttonCombo = '';
         buttonTimeoutRunning = false;
-    } else {
+    }
+    if (value == false && buttonCombo.length <= 3) {
         buzz('BUTTON_PRESS');
     }
 }
