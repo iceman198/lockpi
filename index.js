@@ -141,8 +141,8 @@ function startButtonTimeout() {
 }
 
 function buttonChangeCall(button, value) {
-    buzz('BUTTON_PRESS');
     if (value == false) {
+        buzz('BUTTON_PRESS');
         buttonCombo = buttonCombo + '' + button;
         logger.log('debug', 'index.js', 'Button combo set to ' + buttonCombo);
         startButtonTimeout();
