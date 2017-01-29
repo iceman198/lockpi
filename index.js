@@ -115,6 +115,16 @@ function buzz(type) {
             }
         });
     }
+    if (type == 'BUTTON_PRESS') {
+        var exec  = require("child_process").exec ;
+        exec ('python buttonpress.py', function(error, stdout, stderr) {
+            if (error) {
+                logger.log('error','index.js','stderr from buzz type ' + type + ' is ' + stderr);
+            } else {
+                logger.log('debug','index.js','stdout from buzz type ' + type + ' is ' + stdout);
+            }
+        });
+    }
 }
 
 function startButtonTimeout() {
@@ -131,6 +141,7 @@ function startButtonTimeout() {
 }
 
 function buttonChangeCall(button, value) {
+    buzz('BUTTON_PRESS');
     if (value == false) {
         buttonCombo = buttonCombo + '' + button;
         logger.log('debug', 'index.js', 'Button combo set to ' + buttonCombo);
