@@ -96,7 +96,7 @@ setTimeout(function() {
 function buzz(type) {
     logger.log('debug', 'index.js','Doing buzz type ' + type);
     var exec  = require("child_process").exec ;
-    exec ('py unlock_success.py', function(error, stdout, stderr) {
+    exec ('python unlock_success.py', function(error, stdout, stderr) {
         if (error) {
             logger.log('error','index.js','stderr from buzz type ' + type + ' is ' + stderr);
         } else {
