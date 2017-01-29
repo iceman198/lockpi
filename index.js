@@ -95,14 +95,26 @@ setTimeout(function() {
 
 function buzz(type) {
     logger.log('debug', 'index.js','Doing buzz type ' + type);
-    var exec  = require("child_process").exec ;
-    exec ('python unlock_success.py', function(error, stdout, stderr) {
-        if (error) {
-            logger.log('error','index.js','stderr from buzz type ' + type + ' is ' + stderr);
-        } else {
-            logger.log('debug','index.js','stdout from buzz type ' + type + ' is ' + stdout);
-        }
-    });
+    if (type == 'UNLOCK_SUCCESS') {
+        var exec  = require("child_process").exec ;
+        exec ('python unlock_success.py', function(error, stdout, stderr) {
+            if (error) {
+                logger.log('error','index.js','stderr from buzz type ' + type + ' is ' + stderr);
+            } else {
+                logger.log('debug','index.js','stdout from buzz type ' + type + ' is ' + stdout);
+            }
+        });
+    }
+    if (type == 'UNLOCK_FAIL') {
+        var exec  = require("child_process").exec ;
+        exec ('python unlock_fail.py', function(error, stdout, stderr) {
+            if (error) {
+                logger.log('error','index.js','stderr from buzz type ' + type + ' is ' + stderr);
+            } else {
+                logger.log('debug','index.js','stdout from buzz type ' + type + ' is ' + stdout);
+            }
+        });
+    }
 }
 
 function startButtonTimeout() {
