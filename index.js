@@ -153,12 +153,13 @@ function checkCode(code) {
     } else {
         logger.log('debug', 'index.js', 'UNKNOWN code of ' + code + ' // blocking access');
         // some code to signal access denied
+        buzz('UNLOCK_FAIL');
         sendUnlockStatus('BLOCKED');
     }
 }
 
 function unlockDoor() {
-    buzz(lockOpenTime);
+    buzz('UNLOCK_SUCCESS');
     setPin(relayPin, 0); // set the pin to low to trigger the relay
     setTimeout(function () {
         setPin(relayPin, 1);
