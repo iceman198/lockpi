@@ -26,7 +26,7 @@ melody_unlock_success = [
 ]
 
 tempo_unlock_success = [
-	2,2,2,2,2,2
+	6,6,6,6,6,6
 ]
 
 def buzz(frequency, length):	 #create the function "buzz" and feed it the pitch and duration)
