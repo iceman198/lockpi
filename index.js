@@ -105,6 +105,8 @@ function buzz(type) {
     });
 }
 
+
+
 function startButtonTimeout() {
     if (buttonTimeoutRunning == false) {
         buttonTimeoutRunning = true;
