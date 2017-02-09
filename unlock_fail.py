@@ -22,11 +22,11 @@ notes = {
 }
 
 melody_unlock_fail = [
-	notes['C4'], notes['C4'], notes['C4']
+	notes['C4'], notes['C4'], notes['A3'], notes['A3'], notes['BB3'], notes['BB3']
 ]
 
 tempo_unlock_fail = [
-	4,4,4
+	8,8,8,8,8,8
 ]
 
 def buzz(frequency, length):	 #create the function "buzz" and feed it the pitch and duration)
