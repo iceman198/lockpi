@@ -14,7 +14,7 @@ rgpio.setup(relayPin,  rgpio.DIR_OUT);
 
 var buttonWatchInterval;
 var buttonTimeoutRunning = false;
-var buttonTimeout = 10000;
+var buttonTimeout = 16000;
 var buttonIntTime = 200;
 
 var button1pin = 7;
@@ -90,8 +90,42 @@ logger.log('info', 'index.js', 'Ready and waiting...');
 startButtonWatch();
 setTimeout(function() { // have to delay this for some reason...something with fighting for the gpio on startup?
     unlockDoor();
+    //buzz(1000);
 }, 1000);
 
+function buzz(type) {
+    logger.log('debug', 'index.js','Doing buzz type ' + type);
+    if (type == 'UNLOCK_SUCCESS') {
+        var exec  = require("child_process").exec ;
+        exec ('python unlock_success.py', function(error, stdout, stderr) {
+            if (error) {
+                logger.log('error','index.js','stderr from buzz type ' + type + ' is ' + stderr);
+            } else {
+                logger.log('debug','index.js','stdout from buzz type ' + type + ' is ' + stdout);
+            }
+        });
+    }
+    if (type == 'UNLOCK_FAIL') {
+        var exec  = require("child_process").exec ;
+        exec ('python unlock_fail.py', function(error, stdout, stderr) {
+            if (error) {
+                logger.log('error','index.js','stderr from buzz type ' + type + ' is ' + stderr);
+            } else {
+                logger.log('debug','index.js','stdout from buzz type ' + type + ' is ' + stdout);
+            }
+        });
+    }
+    if (type == 'BUTTON_PRESS') {
+        var exec  = require("child_process").exec ;
+        exec ('python buttonpress.py', function(error, stdout, stderr) {
+            if (error) {
+                logger.log('error','index.js','stderr from buzz type ' + type + ' is ' + stderr);
+            } else {
+                logger.log('debug','index.js','stdout from buzz type ' + type + ' is ' + stdout);
+            }
+        });
+    }
+}
 
 function startButtonTimeout() {
     if (buttonTimeoutRunning == false) {
@@ -101,6 +135,7 @@ function startButtonTimeout() {
                 logger.log('debug', 'index.js', 'Resetting buttonCombo');
                 buttonCombo = '';
                 buttonTimeoutRunning = false;
+                buzz('UNLOCK_FAIL');
             }
         }, buttonTimeout);
     }
@@ -118,7 +153,9 @@ function buttonChangeCall(button, value) {
         buttonCombo = '';
         buttonTimeoutRunning = false;
     }
-
+    if (value == false && buttonCombo.length <= 3) {
+        buzz('BUTTON_PRESS');
+    }
 }
 
 function checkCode(code) {
@@ -129,15 +166,24 @@ function checkCode(code) {
     } else {
         logger.log('debug', 'index.js', 'UNKNOWN code of ' + code + ' // blocking access');
         // some code to signal access denied
+        buzz('UNLOCK_FAIL');
         sendUnlockStatus('BLOCKED');
     }
 }
 
 function unlockDoor() {
+<<<<<<< HEAD
     setPin(relayPin, 1); // set the pin to low to trigger the relat
     setTimeout(function () {
         setPin(relayPin, 0);
         logger.log('debug', 'index.js', 'Locking the door again')
+=======
+    buzz('UNLOCK_SUCCESS');
+    setPin(relayPin, 0); // set the pin to low to trigger the relay
+    setTimeout(function () {
+        setPin(relayPin, 1);
+        logger.log('debug', 'index.js', 'Locking the door again');
+>>>>>>> c23cd0cead5ad76bdfd751c8568d4f003402764d
     }, lockOpenTime); // lock the door again after the set amount of time
 }
 
@@ -146,7 +192,7 @@ function setPin(pin, stat) {
     if (stat == 1) { value = true; }
         rgpio.write(pin,  value,  function (err)  {
                 if  (err)  throw  err;
-        logger.log('debug', 'index.js', 'Set pin ' + pin + ' to ' + value);
+        //logger.log('debug', 'index.js', 'Set pin ' + pin + ' to ' + value);
         });
 }
 
@@ -184,5 +230,14 @@ function doHeartbeat() {
         if (err != null) { logger.log('error', 'index.js', 'ERROR making call to: ' + option.uri + ' || ' + err.code); }
         if (body != null) { logger.log('info', 'index.js', 'Call to ' + option.uri + ' successful: ' + body); }
     });
+}
+
+function sleep(milliseconds) {
+	var tempTime = new Date().getTime();
+	for (var i = 0; i < 1e7; i++) {
+		if ((new Date().getTime() - tempTime) > milliseconds){
+			break;
+		}
+	}
 }
 

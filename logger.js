@@ -1,6 +1,6 @@
 var fs = require('fs');
 var logLevel = 'info';
-var logFile = 'lockpi.log';
+var logFile = '/home/pi/lockpi/lockpi.log';
 
 function writeToLogFile(text) {
 	var fs = require('fs');
