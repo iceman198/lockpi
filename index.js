@@ -172,18 +172,11 @@ function checkCode(code) {
 }
 
 function unlockDoor() {
-<<<<<<< HEAD
     setPin(relayPin, 1); // set the pin to low to trigger the relat
     setTimeout(function () {
         setPin(relayPin, 0);
         logger.log('debug', 'index.js', 'Locking the door again')
-=======
     buzz('UNLOCK_SUCCESS');
-    setPin(relayPin, 0); // set the pin to low to trigger the relay
-    setTimeout(function () {
-        setPin(relayPin, 1);
-        logger.log('debug', 'index.js', 'Locking the door again');
->>>>>>> c23cd0cead5ad76bdfd751c8568d4f003402764d
     }, lockOpenTime); // lock the door again after the set amount of time
 }
 
