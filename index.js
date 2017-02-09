@@ -194,7 +194,7 @@ function setPin(pin, stat) {
 
 function getCodeList() {
     var command = 'GETLIST';
-    var url = 'http://locks.duttonbiz.com/service.php?cmd=' + command + '&key=' + accessKey + '&lockid=' + lockId;
+    var url = 'http://locks.duttonbiz.com/service.php?cmd=' + command + '&key=' + accessKey;
 
     option = { method: 'GET', uri: url }
     request(option, function (err, res, body) {
@@ -210,7 +210,7 @@ function getCodeList() {
 function sendUnlockStatus(status) {
     var command = 'UNLOCK';
     var code = '';
-    var url = 'http://locks.duttonbiz.com/service.php?cmd=' + command + '&key=' + accessKey + '&lockid=' + lockId + '&code=' + code + '&status=' + status;
+    var url = 'http://locks.duttonbiz.com/service.php?cmd=' + command + '&key=' + accessKey + '&code=' + code + '&status=' + status;
     option = { method: 'GET', uri: url }
     request(option, function (err, res, body) {
         if (err != null) { logger.log('error', 'index.js', 'ERROR making call to: ' + option.uri + ' || ' + err.code); }
@@ -220,7 +220,7 @@ function sendUnlockStatus(status) {
 
 function doHeartbeat() {
     var command = 'HEARTBEAT';
-    var url = 'http://locks.duttonbiz.com/service.php?cmd=' + command + '&key=' + accessKey + '&lockid=' + lockId;
+    var url = 'http://locks.duttonbiz.com/service.php?cmd=' + command + '&key=' + accessKey;
     option = { method: 'GET', uri: url }
     request(option, function (err, res, body) {
         if (err != null) { logger.log('error', 'index.js', 'ERROR making call to: ' + option.uri + ' || ' + err.code); }
