@@ -134,9 +134,9 @@ function checkCode(code) {
 }
 
 function unlockDoor() {
-    setPin(relayPin, 0); // set the pin to low to trigger the relat
+    setPin(relayPin, 1); // set the pin to low to trigger the relat
     setTimeout(function () {
-        setPin(relayPin, 1);
+        setPin(relayPin, 0);
         logger.log('debug', 'index.js', 'Locking the door again')
     }, lockOpenTime); // lock the door again after the set amount of time
 }
