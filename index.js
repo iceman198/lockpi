@@ -147,15 +147,15 @@ function buttonChangeCall(button, value) {
         logger.log('debug', 'index.js', 'Button combo set to ' + buttonCombo);
         startButtonTimeout();
     }
+    if (value == false && buttonCombo.length <= 3) {
+        //logger.log('debug', 'index.js', 'Button combo is ' + buttonCombo.length + ' characters');
+        buzz('BUTTON_PRESS');
+    }
     if (buttonCombo.length > 3) {
         logger.log('debug', 'index.js', 'Button combo has reached 4 characters...resetting');
         checkCode(buttonCombo);
         buttonCombo = '';
         buttonTimeoutRunning = false;
-    }
-    if (value == false && buttonCombo.length <= 3) {
-        logger.log('debug', 'index.js', 'Button combo is ' + buttonCombo.length + ' characters');
-        buzz('BUTTON_PRESS');
     }
 }
 
