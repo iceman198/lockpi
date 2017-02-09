@@ -154,6 +154,7 @@ function buttonChangeCall(button, value) {
         buttonTimeoutRunning = false;
     }
     if (value == false && buttonCombo.length <= 3) {
+        logger.log('debug', 'index.js', 'Button combo is ' + buttonCombo.length + ' characters');
         buzz('BUTTON_PRESS');
     }
 }
