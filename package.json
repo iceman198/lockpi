@@ -12,6 +12,10 @@
     "lock"
   ],
   "author": "Sean Dutton",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iceman198/lockpi.git"
+  },
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
