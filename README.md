@@ -24,6 +24,18 @@ Update your Pi:
 
 Make sure to enable SPI in raspi-config as well.
 
+Buzzer wiring:
+    Pi Pin 39 <-- GND --> Buzz GND
+    Pi Pin 13 <-- SIG --> Buzz Signal
+
+Once you've got things wired up, you can go into the lockpi directory and do:
+    $npm install
+
+To run the script, you will need to do it as sudo because of the rfid reader:
+    $sudo node index.js
+
+If you run into issues, you might have to do everything below this line but I just did a fresh install of raspbian and I didn't have to...so just keeping it here just in case.
+----------------------------------------------------------------------------------------------------------------
 Not quite sure this is needed but lets configure the SPI group: (taken from http://www.hacker-maker.com/2015/12/rfid-rc522-on-raspberry-pi-with-nodejs.html)
 
     $sudo groupadd -f --system spi
@@ -59,8 +71,3 @@ Everything previously mentioned is taken from https://www.npmjs.com/package/rc52
 
 For the lock relay, you'll need pi-gpio: https://www.npmjs.com/package/pi-gpio#installation << don't use this one
 Might go with https://www.npmjs.com/package/rpi-gpio instead...<< yup, going with this one
-
-Buzzer wiring:
-    Pi Pin 39 <-- GND --> Buzz GND
-    Pi Pin 13 <-- SIG --> Buzz Signal
-
