@@ -60,3 +60,7 @@ Everything previously mentioned is taken from https://www.npmjs.com/package/rc52
 For the lock relay, you'll need pi-gpio: https://www.npmjs.com/package/pi-gpio#installation << don't use this one
 Might go with https://www.npmjs.com/package/rpi-gpio instead...<< yup, going with this one
 
+Buzzer wiring:
+    Pi Pin 39 <-- GND --> Buzz GND
+    Pi Pin 13 <-- SIG --> Buzz Signal
+
