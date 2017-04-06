@@ -165,12 +165,12 @@ function checkCode(code) {
     if (codeArray.indexOf(code) > -1) {
         logger.log('debug', 'index.js', 'RECOGNIZED code of ' + code + ' so Im letting them in');
         unlockDoor();
-        sendUnlockStatus('ALLOWED');
+        sendUnlockStatus('ALLOWED', code);
     } else {
         logger.log('debug', 'index.js', 'UNKNOWN code of ' + code + ' // blocking access');
         // some code to signal access denied
         buzz('UNLOCK_FAIL');
-        sendUnlockStatus('BLOCKED');
+        sendUnlockStatus('BLOCKED', code);
     }
 }
 
@@ -207,9 +207,8 @@ function getCodeList() {
     });
 }
 
-function sendUnlockStatus(status) {
+function sendUnlockStatus(status, code) {
     var command = 'UNLOCK';
-    var code = '';
     var url = 'http://locks.duttonbiz.com/service.php?cmd=' + command + '&key=' + accessKey + '&code=' + code + '&status=' + status;
     option = { method: 'GET', uri: url }
     request(option, function (err, res, body) {
