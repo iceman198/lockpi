@@ -197,14 +197,22 @@ function getCodeList() {
     var url = 'http://locks.duttonbiz.com/service.php?cmd=' + command + '&key=' + accessKey;
 
     option = { method: 'GET', uri: url }
-    request(option, function (err, res, body) {
-        if (err != null) { logger.log('error', 'index.js', 'ERROR making call to: ' + option.uri + ' || ' + err.code); }
-        if (body != null) {
-            logger.log('info', 'index.js', 'Call to ' + option.uri + ' successful: ' + body);
-            var json = JSON.parse(body);
-            codeArray = json.codeArr;
-        }
-    });
+    try {
+	    request(option, function (err, res, body) {
+		try {
+			if (err != null) { logger.log('error', 'index.js', 'ERROR making call to: ' + option.uri + ' || ' + err.code); }
+			if (body != null) {
+			    logger.log('info', 'index.js', 'Call to ' + option.uri + ' successful: ' + body);
+			    var json = JSON.parse(body);
+			    codeArray = json.codeArr;
+			}
+		} catch(err) {
+		    logger.log('error', 'index.js', 'error parsing web response: ' + err);
+		}
+	    });
+    } catch(err) {
+	    logger.log('error', 'index.js', 'error making web call: ' + err);
+    }
 }
 
 function sendUnlockStatus(status, code) {
