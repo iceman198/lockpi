@@ -2,17 +2,18 @@ var request = require('request');
 var rgpio = require('rpi-gpio');
 var rc522 = require("rc522");
 var logger = require('./logger.js');
+//var onoff = require('onoff').Gpio;
 
 var accessKey = '098f6bcd4621d373cade4e832627b4f6'; // Access key given to you by the web app (http://locks.duttonbiz.com/)
 var lockId = '1'; // Lock id to identify the lock for your setup
-var codeArray = [];
+var codeArray = ["1114"];
 var sleepTime = 30000;
 var lockOpenTime = 5000;
 
 var buzzerMelodyLocation = '/home/pi/lockpi/';
 
-var relayPin = 16;
-rgpio.setup(relayPin,  rgpio.DIR_OUT);
+var relayPin = 12;
+//var myRelay = new onoff(relayPin, 'out');
 
 var buttonWatchInterval;
 var buttonTimeoutRunning = false;
@@ -21,16 +22,12 @@ var buttonIntTime = 200;
 
 var button1pin = 7;
 var button1value = true;
-rgpio.setup(button1pin, rgpio.DIR_IN);
 var button2pin = 29;
 var button2value = true;
-rgpio.setup(button2pin, rgpio.DIR_IN);
 var button3pin = 31;
 var button3value = true;
-rgpio.setup(button3pin, rgpio.DIR_IN);
 var button4pin = 5;
 var button4value = true;
-rgpio.setup(button4pin, rgpio.DIR_IN);
 
 var buttonCombo = '';
 
@@ -40,6 +37,17 @@ rgpio.on('change', function(channel, value) {
 });
 rgpio.setup(button3pin, rgpio.DIR_IN, rgpio.EDGE_BOTH);
 */
+
+//function setupPins() {
+//	rgpio.destroy(function() {
+//		logger.log('debug','index.js','Pins destroyed, resetting...');
+//	});
+	rgpio.setup(relayPin, rgpio.DIR_OUT);
+	rgpio.setup(button1pin, rgpio.DIR_IN);
+	rgpio.setup(button2pin, rgpio.DIR_IN);
+	rgpio.setup(button3pin, rgpio.DIR_IN);
+	rgpio.setup(button4pin, rgpio.DIR_IN);
+//}
 
 function startButtonWatch() {
     buttonWatchInterval = setInterval(function () {
@@ -89,9 +97,10 @@ rc522(function (rfidNum) { // This is called everytime the reader sees a tag
 });
 
 logger.log('info', 'index.js', 'Ready and waiting...');
+//setupPins();
 startButtonWatch();
 setTimeout(function() { // have to delay this for some reason...something with fighting for the gpio on startup?
-    unlockDoor();
+    //unlockDoor();
     //buzz(1000);
 }, 1000);
 
@@ -177,9 +186,22 @@ function checkCode(code) {
 function unlockDoor() {
     buzz('UNLOCK_SUCCESS');
     setPin(relayPin, 1); // set the pin to low to trigger the relat
+    //myRelay.write(1);
     setTimeout(function () {
+	//myRelay.write(0);
+        //setupPins();
         setPin(relayPin, 0);
-        logger.log('debug', 'index.js', 'Locking the door again')
+	process.exit(0);
+	//rgpio.setup(relayPin,  rgpio.DIR_OUT);
+        logger.log('debug', 'index.js', 'Locking the door again');
+	//sleep(1000);
+	//setTimeout(function() {
+		//rc522 = require("rc522");
+		//logger.log('debug', 'index.js', 'Resetting rfid');
+		//rc522(function (rfidNum) { // This is called everytime the reader sees a tag
+			//checkCode(rfidNum);
+		//});
+	//}, 2000);
     }, lockOpenTime); // lock the door again after the set amount of time
 }
 
@@ -243,4 +265,3 @@ function sleep(milliseconds) {
 		}
 	}
 }
-
