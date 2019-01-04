@@ -72,7 +72,8 @@ function getDateTime() {
     var date = new Date();
 
     var hour = date.getHours();
-    hour = (hour < 10 ? "0" : "") + hour;
+	hour = (hour < 10 ? "0" : "") + hour;
+	console.log('hour is: ' + hour);
 
     var min  = date.getMinutes();
     min = (min < 10 ? "0" : "") + min;
