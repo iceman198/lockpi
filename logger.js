@@ -59,7 +59,7 @@ exports.log = function (level, desc, text) {
 	//console.log('logLevelNum: ' + logLevelNum + ' // levelNum passed: ' + levelNum);
 	var mydate = getDateTime();
 	var stringFile = '"' + mydate + '","' + desc + '","' + text + '"';
-	var stringConsole = + mydate + ' || ' + desc + ' || ' + text;
+	var stringConsole = mydate + ' || ' + desc + ' || ' + text;
 	if (logLevelNum <= levelNum) {
 		console.log(stringConsole);
 		writeToLogFile(stringFile);
@@ -73,7 +73,6 @@ function getDateTime() {
 
     var hour = date.getHours();
 	hour = (hour < 10 ? "0" : "") + hour;
-	console.log('hour is: ' + hour);
 
     var min  = date.getMinutes();
     min = (min < 10 ? "0" : "") + min;
@@ -90,6 +89,5 @@ function getDateTime() {
     day = (day < 10 ? "0" : "") + day;
 
 	var mydate = year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
-	console.log('about to return ' + mydate);
 	return mydate;
 }
