@@ -181,7 +181,7 @@ function unlockDoor(doshutdown) {
     setTimeout(function () {
         setPin(relayPin, 0);
         if (doshutdown == true) { 
-            require('child_process').exec('shutdown -h now', function (msg) { console.log(msg) });
+            require('child_process').exec('shutdown now', function (msg) { console.log(msg) });
         }
         process.exit(0);
         logger.log('debug', 'index.js', 'Locking the door again');
