@@ -89,6 +89,7 @@ function getDateTime() {
 	var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
-	console.log('about to return' + year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec);
-	return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+	var mydate = year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+	console.log('about to return ' + mydate);
+	return mydate;
 }
