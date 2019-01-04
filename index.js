@@ -6,6 +6,7 @@ var logger = require('./logger.js');
 var accessKey = '098f6bcd4621d373cade4e832627b4f6'; // Access key given to you by the web app (http://locks.duttonbiz.com/)
 var lockId = '1'; // Lock id to identify the lock for your setup
 var codeArray = ["1114"];
+var shutdownCode = ["4321"];
 var sleepTime = 30000;
 var lockOpenTime = 5000;
 
@@ -87,7 +88,7 @@ logger.log('info', 'index.js', 'Ready and waiting...');
 startButtonWatch();
 
 /*setTimeout(function() { // have to delay this for some reason...something with fighting for the gpio on startup?
-    unlockDoor();
+    unlockDoor(false);
     buzz(1000);
 }, 1000);*/
 
@@ -160,8 +161,12 @@ function buttonChangeCall(button, value) {
 function checkCode(code) {
     if (codeArray.indexOf(code) > -1) {
         logger.log('debug', 'index.js', 'RECOGNIZED code of ' + code + ' so Im letting them in');
-        unlockDoor();
+        unlockDoor(false);
         sendUnlockStatus('ALLOWED', code);
+    } else if (shutdownCode.indexOf(code) > -1) {
+        logger.log('info', 'index.js', 'SHUTDOWN code received, performing shutdown');
+        unlockDoor(true);
+        sendUnlockStatus('SHUTDOWN', code);
     } else {
         logger.log('debug', 'index.js', 'UNKNOWN code of ' + code + ' // blocking access');
         // some code to signal access denied
@@ -170,13 +175,16 @@ function checkCode(code) {
     }
 }
 
-function unlockDoor() {
+function unlockDoor(doshutdown) {
     buzz('UNLOCK_SUCCESS');
     setPin(relayPin, 1); // set the pin to low to trigger the relat
     setTimeout(function () {
-    setPin(relayPin, 0);
-	process.exit(0);
-    logger.log('debug', 'index.js', 'Locking the door again');
+        setPin(relayPin, 0);
+        if (doshutdown == true) { 
+            require('child_process').exec('shutdown -h now', function (msg) { console.log(msg) });
+        }
+        process.exit(0);
+        logger.log('debug', 'index.js', 'Locking the door again');
     }, lockOpenTime); // lock the door again after the set amount of time
 }
 
